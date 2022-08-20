@@ -11,9 +11,14 @@ router.get("/", function (req, res, next) {
 router.get("/costumers", function (req, res, next) {
   costumer.getAllcustomers(req, res);
 });
-router.post("/", function (req, res, next) {
+router.post("/customers", function (req, res, next) {
   costumer.addCustomer(req, res);
 });
+
+router.put("/:id", function (req, res, next) {
+  costumer.updateCustomer(req, res);
+});
+
 router.delete("/:id", function (req, res, next) {
   costumer.deleteCustomers(req, res);
 });

@@ -1,1 +1,149 @@
-<h1>Hello everybody</h1>
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-text"> CompanyCrm <i class="bi bi-tree-fill"></i></span>
+  <div>
+    <button type="button" class="btn btn-light" (click)="Logout()">
+      Logout
+    </button>
+  </div>
+</nav>
+<div class="d-flex justify-content-end"><h5>Hello|Olga</h5></div>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <i class="bi bi-person-fill"></i>
+    Customers
+  </a>
+  <div class="p-2">
+    <button (click)="toggleForm()" class="btn btn-primary">
+      <i class="bi-person-plus pe-2"></i>
+      Add Customer
+    </button>
+  </div>
+</nav>
+<div *ngIf="showForm">
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="" class="form-label">First name</label>
+      <input formControlName="first_name" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Last name</label>
+      <input formControlName="last_name" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Email</label>
+      <input formControlName="email" type="email" class="form-control" />
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Phone</label>
+      <input formControlName="phone" type="text" class="form-control" />
+    </div>
+    <button
+      [disabled]="!customerForm.valid"
+      type="submit"
+      class="btn btn-primary"
+    >
+      Add
+    </button>
+  </form>
+</div>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <div *ngIf="customer.isEdit">
+            <input
+              type="text"
+              [(ngModel)]="customer.first_name"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="!customer.isEdit">
+            {{ customer.first_name }}
+          </div>
+        </td>
+        <td>
+          <div *ngIf="customer.isEdit">
+            <input
+              type="text"
+              [(ngModel)]="customer.last_name"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="!customer.isEdit">
+            {{ customer.last_name }}
+          </div>
+        </td>
+        <td>
+          <div *ngIf="customer.isEdit">
+            <input
+              type="text"
+              [(ngModel)]="customer.email"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="!customer.isEdit">
+            {{ customer.email }}
+          </div>
+        </td>
+        <td>
+          <div *ngIf="customer.isEdit">
+            <input
+              type="text"
+              [(ngModel)]="customer.phone"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="!customer.isEdit">
+            {{ customer.phone }}
+          </div>
+        </td>
+        <td>
+          <div class="d-flex justify-content-start">
+            <div *ngIf="customer.isEdit">
+              <button
+                type="button"
+                class="btn btn-success"
+                type="submit"
+                class="btn btn-primary"
+                (click)="onUpdate(customer.id, customer)"
+                (click)="customer.isEdit = false"
+              >
+                Save
+              </button>
+            </div>
+            <div *ngIf="customer.isEdit">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="customer.isEdit = false"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+          <div (click)="editCustomers(customer.id, customer)" class="button">
+            <i class="bi bi-pen"></i>
+          </div>
+          <div *ngIf="!customer.isEdit">
+            <div (click)="deleteCustomer(customer.id)" class="button">
+              <i class="bi bi-trash"></i>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
