@@ -4,7 +4,7 @@
 
 # project
 /node_modules/
-/config/
+
 /exports/
 
 *.txt
